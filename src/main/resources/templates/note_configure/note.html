@@ -10,9 +10,18 @@
             margin: 0 auto;
             text-align: center;
         }
+        .dark-theme {
+            background-color: black;
+            color: white;
+        }
+
+        .light-theme {
+        background-color: white;
+        color: black;
+        }
     </style>
 </head>
-<body>
+<body th:class="${theme == 'black' ? 'dark-theme' : 'light-theme'}">
 <div class="container">
     <h1>Your person Notes📝</h1>
     <p>These are your personal notes delete or edit them😊</p>
@@ -42,6 +51,13 @@
         </tr>
         </tbody>
     </table>
+</div>
+<div class="container">
+    <p>Change theme color [⚪️] & [⚫️] </p>
+    <form th:action="@{/note/changeTheme}" method="post">
+        <button type="submit" class="btn btn-light" name="theme" value="white">Light</button>
+        <button type="submit" class="btn btn-dark" name="theme" value="black">Dark</button>
+    </form>
 </div>
 </body>
 </html>
