@@ -35,7 +35,7 @@
                 </a>
             </th>
             <th>
-                <form th:action="@{'/note/delete/' + ${note.id}}" method="post">
+                <form th:action="@{'/note/delete?id=' + ${note.id}}" method="post">
                     <button type="submit" class="btn btn-outline-danger">Delete ❌</button>
                 </form>
             </th>
