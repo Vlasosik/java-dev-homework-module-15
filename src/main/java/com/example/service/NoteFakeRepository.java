@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Note;
+import com.example.exception.NoteNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -12,7 +13,6 @@ import java.util.UUID;
 
 @Repository
 public class NoteFakeRepository {
-    private static final String EXCEPTION_MESSAGE = "Note are id '%s' does not exist";
     private final Map<Long, Note> noteMap = new HashMap<>();
 
     public Map<Long, Note> mapAll() {
@@ -26,15 +26,15 @@ public class NoteFakeRepository {
         return note;
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws NoteNotFoundException {
         if (noteMap.containsKey(id)) {
             noteMap.remove(id);
         } else {
-            throw new NoSuchElementException(String.format(EXCEPTION_MESSAGE, id));
+            throw new NoteNotFoundException(id);
         }
     }
 
-    public void update(Note note) {
+    public void update(Note note) throws NoteNotFoundException {
         Optional<Map.Entry<Long, Note>> updateSearchById = noteMap.entrySet().stream()
                 .filter(n -> Objects.equals(n.getKey(), note.getId()))
                 .findFirst();
@@ -43,15 +43,15 @@ public class NoteFakeRepository {
             updateNote.setTitle(note.getTitle());
             updateNote.setContext(note.getContext());
         } else {
-            throw new NoSuchElementException(String.format(EXCEPTION_MESSAGE, note.getId()));
+            throw new NoteNotFoundException();
         }
     }
 
-    public Note getById(Long id) {
+    public Note getById(Long id) throws NoteNotFoundException {
         if (noteMap.containsKey(id)) {
             return noteMap.get(id);
         } else {
-            throw new NoSuchElementException(String.format(EXCEPTION_MESSAGE, id));
+            throw new NoteNotFoundException(id);
         }
     }
 

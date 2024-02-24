@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Note;
+import com.example.exception.NoteNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,17 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(long id) throws NoteNotFoundException {
         noteFakeRepository.deleteById(id);
     }
 
     @Override
-    public void update(Note note) {
+    public void update(Note note) throws NoteNotFoundException {
         noteFakeRepository.update(note);
     }
 
     @Override
-    public Note getById(long id) {
+    public Note getById(long id) throws NoteNotFoundException {
         return noteFakeRepository.getById(id);
     }
 }
